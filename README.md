@@ -23,6 +23,8 @@ npm run build      # 构建产物
 npm run dist       # 打包 Windows 安装包（NSIS，输出到 release/）
 ```
 
+> 打包注意：非管理员 Windows 账户首次打包时，electron-builder 解压 winCodeSign 工具包会因无法创建符号链接而失败（`Cannot create symbolic link: 客户端没有所需的特权`，包内两个 macOS dylib 链接导致）。绕过办法：用 7-Zip（项目自带 `node_modules/7zip-bin/win/x64/7za.exe`）把 `%LOCALAPPDATA%\electron-builder\Cache\winCodeSign\` 下已下载的 `.7z` 手工解压到同名的 `winCodeSign-2.6.0/` 目录（忽略那两个符号链接错误），再重跑 `npm run dist` 即可。
+
 ## 技术方案
 
 - **形态**：Electron 桌面应用（Windows 优先），electron-vite 构建，TypeScript 全进程
