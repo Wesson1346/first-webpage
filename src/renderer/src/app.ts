@@ -1,4 +1,5 @@
 import './style.css'
+import { bindReaderEvents, registerReaderEntry } from './reader'
 import { importFromFileOrAlert, renderShelf } from './shelf'
 
 const $ = (id: string): HTMLElement | null => document.getElementById(id)
@@ -49,6 +50,8 @@ function bindDragImport(): void {
 }
 
 async function main(): Promise<void> {
+  registerReaderEntry()
+  bindReaderEvents()
   $('import-btn')?.addEventListener('click', importViaDialog)
   bindDragImport()
   await renderShelf()
