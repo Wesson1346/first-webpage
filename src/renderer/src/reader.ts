@@ -1,9 +1,15 @@
 import type { Progress } from '../../shared/types'
-import { getBook, getProgress, getSetting, putProgress, setSetting } from './db'
+import { getBook, getProgress, getSetting, putProgress } from './db'
 import { decode, splitParagraphs } from './encoding'
 import { findPageContaining, pageStarts, paginate } from './paginator'
 import { calcPercent } from './progress'
-import { charsPerPageFor, DEFAULT_FONT_INDEX, FONT_SIZES, nextFontIndex } from './settings'
+import {
+  charsPerPageFor,
+  DEFAULT_FONT_INDEX,
+  FONT_SIZES,
+  nextFontIndex,
+  saveFontIndex
+} from './settings'
 import { renderShelf, setOnOpenBook } from './shelf'
 
 const $ = (id: string): HTMLElement => {
@@ -120,7 +126,7 @@ export function changeFontSize(delta: number): void {
   const current = Number(document.documentElement.dataset.fontIndex ?? DEFAULT_FONT_INDEX)
   const next = nextFontIndex(current, delta)
   document.documentElement.dataset.fontIndex = String(next)
-  void setSetting('fontIndex', next)
+  void saveFontIndex(next)
   applyFontSize()
 
   const anchor = pageStartIndices[currentPageIndex] ?? 0

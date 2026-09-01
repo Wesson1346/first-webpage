@@ -1,8 +1,13 @@
 import './style.css'
 import { bindReaderEvents, registerReaderEntry } from './reader'
 import { importFromFileOrAlert, renderShelf } from './shelf'
+import { loadSettings, saveTheme } from './settings'
+import { applyTheme, toggleTheme } from './theme'
+import type { Theme } from '../../shared/types'
 
 const $ = (id: string): HTMLElement | null => document.getElementById(id)
+
+let currentTheme: Theme = 'day'
 
 async function importViaDialog(): Promise<void> {
   const btn = $('import-btn') as HTMLButtonElement | null
@@ -49,9 +54,25 @@ function bindDragImport(): void {
   })
 }
 
+function bindThemeButtons(): void {
+  for (const id of ['theme-btn-shelf', 'theme-btn-reader']) {
+    $(id)?.addEventListener('click', () => {
+      currentTheme = toggleTheme(currentTheme)
+      applyTheme(currentTheme)
+      void saveTheme(currentTheme)
+    })
+  }
+}
+
 async function main(): Promise<void> {
+  const settings = await loadSettings()
+  currentTheme = settings.theme
+  document.documentElement.dataset.fontIndex = String(settings.fontIndex)
+  applyTheme(currentTheme)
+
   registerReaderEntry()
   bindReaderEvents()
+  bindThemeButtons()
   $('import-btn')?.addEventListener('click', importViaDialog)
   bindDragImport()
   await renderShelf()

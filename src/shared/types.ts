@@ -25,6 +25,12 @@ export interface Progress {
   updatedAt: number
 }
 
+/** 全局阅读设置（settings store 中按 key 分存） */
+export interface ReaderSettings {
+  theme: Theme
+  fontIndex: number
+}
+
 /** preload 暴露给渲染进程的 API 契约 */
 export interface BookApi {
   pickBook(): Promise<PickedBookFile | null>
