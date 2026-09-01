@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TXT 阅读器</title>
+</head>
+<body>
+  <!-- 书架视图 -->
+  <div id="shelf-view" class="view">
+    <header class="shelf-header">
+      <h1>📖 TXT 阅读器</h1>
+      <button id="theme-btn-shelf" class="icon-btn" title="切换日间/夜间模式">🌙</button>
+    </header>
+    <main class="shelf-main">
+      <button id="import-btn" class="import-btn">＋ 导入书籍</button>
+      <p class="import-hint">支持 UTF-8 / GBK 编码的 .txt 文件，也可以直接拖入窗口</p>
+      <div id="book-list" class="book-list"></div>
+      <div id="empty-hint" class="empty-hint" hidden>
+        <p>书架空空如也</p>
+        <p class="sub">点击上方「导入书籍」添加一本书吧</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- 阅读视图 -->
+  <div id="reader-view" class="view" hidden>
+    <header class="reader-header">
+      <button id="back-btn" class="icon-btn">← 书架</button>
+      <div id="reader-title" class="reader-title"></div>
+      <button id="theme-btn-reader" class="icon-btn" title="切换日间/夜间模式">🌙</button>
+    </header>
+    <main id="page-content" class="page-content" title="点击左右两侧翻页"></main>
+    <footer class="reader-footer">
+      <button id="prev-btn" class="page-btn">上一页</button>
+      <div class="footer-center">
+        <span id="page-indicator">1 / 1</span>
+        <div class="font-ctrl">
+          <button id="font-dec" class="mini-btn" title="减小字号">A-</button>
+          <button id="font-inc" class="mini-btn" title="增大字号">A+</button>
+        </div>
+      </div>
+      <button id="next-btn" class="page-btn">下一页</button>
+    </footer>
+  </div>
+
+  <script type="module" src="./src/app.ts"></script>
+</body>
+</html>
